@@ -23,19 +23,19 @@ const companySchema = new mongoose.Schema(
 			required: true,
 		},
 		websiteURL : {
-			type: Number,
+			type: String,
 			required: false,
 		},
 		establishedYear : {
-			type: Number,
+			type: Date,
 			required: false,
 		},
 		companyLogo : {
-			type: Number,
+			type: String,
 			required: false,
 		},
 		country : {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		deletedAt : {
