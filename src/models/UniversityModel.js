@@ -38,7 +38,7 @@ const companySchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
-		dean/DirectorName : {
+		deanDirectorName : {
 			type: String,
 			required: false,
 		},
