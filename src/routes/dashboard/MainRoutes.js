@@ -1,6 +1,6 @@
 import express from "express";
-import { CompanyRoutes } from "./routes/companyRoutes.js";
+import { UniversityRoutes } from "./routes/universityRoutes.js";
 
 export const DashboardRouter = express.Router();
 
-DashboardRouter.use('/companies',CompanyRoutes);
+DashboardRouter.use('/universities',UniversityRoutes);

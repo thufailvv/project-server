@@ -1,11 +1,11 @@
-import { CompanyModel } from "../../models/CompanyModel.js";
+import { UniversityModel } from "../../models/UniversityModel.js";
 
-export const createCompany = async (req, res) => {
+export const createUniversity = async (req, res) => {
     try {
         const { name, description } = req.body;
-        await CompanyModel.create({
-            companyId: '1234',
-            companyName: 'Test desc',
+        await UniversityModel.create({
+            universityId: '1234',
+            universityName: 'Test desc',
             address: 'Addresss',
             contactNumber: 87447777777,
             email_Id: 'test@gmail.com',

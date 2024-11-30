@@ -54,4 +54,4 @@ const companySchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-export const CompanyModel = mongoose.model('companies', companySchema);
+export const UniversityModel = mongoose.model('universities', universitySchema);
