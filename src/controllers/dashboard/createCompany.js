@@ -1,9 +1,9 @@
-import { CertificateModel as CertificateModel } from "../../models/CompanyModel.js";
+import { CompanyModel as CompanyModel } from "../../models/CompanyModel.js";
 
 export const createCompany = async (req, res) => {
     try {
         const { name, description } = req.body;
-        await CertificateModel.create({
+        await CompanyModel.create({
             companyId: '1212',
             companyName: 'Test desc',
             address: 'kannur',

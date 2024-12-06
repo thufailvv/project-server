@@ -1,9 +1,9 @@
-import { CertificateModel as CertificateModel } from "../../models/CompanyModel"
+import { CompanyModel as CompanyModel } from "../../models/CompanyModel"
 
 export const createCompany = async (req, res) => {
     try{
         const { companyId, companyName, address, email_Id, conatctNumber, websiteURL, establishedYear, companyLogo, country, } = req.body;
-        await CertificateModel.create({
+        await CompanyModel.create({
             companyId : companyId,
             companyName : companyName,
             address : address,
@@ -26,7 +26,7 @@ export const createCompany = async (req, res) => {
     }
 };
 
-export const updateData =async (req, res) => {
+export const updateCompany =async (req, res) => {
     try {
         const companyId = req.params.id;
         const { name, description } = req.body;
@@ -49,7 +49,7 @@ export const updateData =async (req, res) => {
     }
     };
 
-    export const deleteData =async (req, res) => {
+    export const deleteCompany =async (req, res) => {
         try {
             const companyId = req.params.id;
 
@@ -66,4 +66,40 @@ export const updateData =async (req, res) => {
             });
         }
 
+    };
+
+    export const viewCompany = async (req, res) => {
+        try {
+            const companyId = req.params.id;
+
+            const company = await CompanyModel.findById(companyId);
+
+            return req.status(200).json({
+                success: true,
+                message: 'Fetched',
+                data: { company: company},
+            });
+        }   catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'server error',
+            });
+        }
+    };
+
+    export const getAllCompany = async (req, res) => {
+        try {
+            const company = await CompanyModel.find();
+
+            return res.status(200).json({
+                success: true,
+                message: 'All Data Fetched',
+                data: { company: company},
+            });
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'server error',
+            });
+        }
     };

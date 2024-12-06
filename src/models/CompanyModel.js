@@ -48,4 +48,4 @@ const companySchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-export const CertificateModel = mongoose.model('companies', companySchema);
+export const CompanyModel = mongoose.model('companies', companySchema);

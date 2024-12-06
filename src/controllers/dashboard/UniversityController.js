@@ -26,3 +26,81 @@ export const createUniversity = async (req, res) => {
         });
     }
 };
+
+export const updateUniversity =async (req, res) => {
+    try {
+        const universityId = req.params.id;
+        const { name, description } = req.body;
+
+        const dataToUpdate = await UniversityModel.findById(universityId);
+        dataToUpdate.name = name;
+        dataToUpdate.description = description;
+
+        await dataToUpdate.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Updated',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+    };
+
+    export const deleteUniversity =async (req, res) => {
+        try {
+            const universityId = req.params.id;
+
+            await UniversityModel .findByAndDelete(universityId);
+
+            return res.status(200).json({
+                success: true,
+                message: 'Deleted',
+            });
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'server error',
+            });
+        }
+
+    };
+
+    export const viewUniversity = async (req, res) => {
+        try {
+            const universityId = req.params.id;
+
+            const university = await UniversityModel.findById(universityId);
+
+            return req.status(200).json({
+                success: true,
+                message: 'Fetched',
+                data: { university: university},
+            });
+        }   catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'server error',
+            });
+        }
+    };
+
+    export const getAllUniversity = async (req, res) => {
+        try {
+            const university = await UniversityModel.find();
+
+            return res.status(200).json({
+                success: true,
+                message: 'All Data Fetched',
+                data: { university: university},
+            });
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'server error',
+            });
+        }
+    };
