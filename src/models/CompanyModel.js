@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 
-const universitySchema = new mongoose.Schema(
+const companySchema = new mongoose.Schema(
 	{
-		universityId : {
+		companyId : {
 			type: String,
 			required: true,
 		},
-	    universityName : {
+	    companyName : {
 			type: String,
 			required: true,
 		},
@@ -30,18 +30,12 @@ const universitySchema = new mongoose.Schema(
 			type: Number,
 			required: false,
 		},
-		accreditationStatus : {
+		
+		companyLogo : {
 			type: String,
 			required: false,
 		},
-		universityLogo : {
-			type: String,
-			required: false,
-		},
-		deanDirectorName : {
-			type: String,
-			required: false,
-		},
+		
 		country : {
 			type: String,
 			required: false,
@@ -54,4 +48,4 @@ const universitySchema = new mongoose.Schema(
 	{ timestamps: true },
 );
 
-export const UniversityModel = mongoose.model('universities', universitySchema);
+export const CertificateModel = mongoose.model('companies', companySchema);

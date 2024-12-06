@@ -1,0 +1,69 @@
+import { CertificateModel as CertificateModel } from "../../models/CompanyModel"
+
+export const createCompany = async (req, res) => {
+    try{
+        const { companyId, companyName, address, email_Id, conatctNumber, websiteURL, establishedYear, companyLogo, country, } = req.body;
+        await CertificateModel.create({
+            companyId : companyId,
+            companyName : companyName,
+            address : address,
+            email_Id : email_Id,
+            conatctNumber : conatctNumber,
+            websiteURL : websiteURL,
+            establishedYear : establishedYear,
+            country : country,
+        });
+
+        return res.status(200).json({
+            success : true,
+            message : 'Created Successfully',
+        });
+    }catch (error){
+        return res.status(50).json({
+            success : false,
+            message : error.message,
+        });
+    }
+};
+
+export const updateData =async (req, res) => {
+    try {
+        const companyId = req.params.id;
+        const { name, description } = req.body;
+
+        const dataToUpdate = await CompanyModel.findById(companyId);
+        dataToUpdate.name = name;
+        dataToUpdate.description = description;
+
+        await dataToUpdate.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Updated',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+    };
+
+    export const deleteData =async (req, res) => {
+        try {
+            const companyId = req.params.id;
+
+            await CompanyModel .findByAndDelete(companyId);
+
+            return res.status(200).json({
+                success: true,
+                message: 'Deleted',
+            });
+        } catch (error) {
+            return res.status(500).json({
+                success: false,
+                message: 'server error',
+            });
+        }
+
+    };

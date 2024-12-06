@@ -1,14 +1,14 @@
-import { UniversityModel } from "../../models/UniversityModel.js";
+import { CertificateModel as CertificateModel } from "../../models/CompanyModel.js";
 
-export const createUniversity = async (req, res) => {
+export const createCompany = async (req, res) => {
     try {
         const { name, description } = req.body;
-        await UniversityModel.create({
-            universityId: '1234',
-            universityName: 'Test desc',
-            address: 'Addresss',
-            email_Id: 'test@gmail.com',
-            contactNumber: 8744777777,
+        await CertificateModel.create({
+            companyId: '1212',
+            companyName: 'Test desc',
+            address: 'kannur',
+            email_Id: 'sample@gmail.com',
+            contactNumber: 9854545454,
             country: 'India', 
         });
 
@@ -24,3 +24,4 @@ export const createUniversity = async (req, res) => {
 
     }
 };
+
