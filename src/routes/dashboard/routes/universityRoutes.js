@@ -4,3 +4,4 @@ import { createUniversity } from "../../../controllers/dashboard/createUniversit
 export const UniversityRoutes = express.Router();
 
 UniversityRoutes.post('/',createUniversity);
+UniversityRoutes.put('/update/:id',createUniversity);

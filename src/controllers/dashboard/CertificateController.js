@@ -28,13 +28,19 @@ export const createCertificate = async (req, res) => {
 
 export const updateCertificate =async (req, res) => {
     try {
-        const certificateId = req.params.id;
-        const { name, description } = req.body;
+        const dataId = req.params.id;
+        const { certificateNumber, studentid, studentName, issueDate, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
 
-        const dataToUpdate = await CertificateModel.findById(certificateId);
-        dataToUpdate.name = name;
-        dataToUpdate.description = description;
-
+        const dataToUpdate = await CertificateModel.findById(dataId);
+        dataToUpdate.certificateNumber = certificateNumber;
+        dataToUpdate.studentid = studentid;
+        dataToUpdate.studentName = studentName;
+        dataToUpdate.issueDate = issueDate;
+        dataToUpdate.collegeName = collegeName;
+        dataToUpdate.universityName = universityName;
+        dataToUpdate.courseDuration = courseDuration;
+        dataToUpdate.affiliationNumber = affiliationNumber;
+       
         await dataToUpdate.save();
 
         return res.status(200).json({
@@ -53,7 +59,7 @@ export const updateCertificate =async (req, res) => {
         try {
             const certificateId = req.params.id;
 
-            await CertificateModel .findByAndDelete(certificateId);
+            await CertificateModel.findByAndDelete(certificateId);
 
             return res.status(200).json({
                 success: true,

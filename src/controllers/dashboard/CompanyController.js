@@ -28,12 +28,19 @@ export const createCompany = async (req, res) => {
 
 export const updateCompany =async (req, res) => {
     try {
-        const companyId = req.params.id;
-        const { name, description } = req.body;
+        const dataId = req.params.id;
+        const { companyId, companyName, address, email_Id, conatctNumber, websiteURL, establishedYear, companyLogo, country, } = req.body;
 
-        const dataToUpdate = await CompanyModel.findById(companyId);
-        dataToUpdate.name = name;
-        dataToUpdate.description = description;
+        const dataToUpdate = await CompanyModel.findById(dataId);
+        dataToUpdate.companyId = companyId;
+        dataToUpdate.companyName = companyName;
+        dataToUpdate.address = address;
+        dataToUpdate.email_Id = email_Id;
+        dataToUpdate.conatctNumber = conatctNumber;
+        dataToUpdate.websiteURL = websiteURL;
+        dataToUpdate.establishedYear = establishedYear;
+        dataToUpdate.companyLogo = companyLogo;
+        dataToUpdate.country = country;
 
         await dataToUpdate.save();
 
@@ -53,7 +60,7 @@ export const updateCompany =async (req, res) => {
         try {
             const companyId = req.params.id;
 
-            await CompanyModel .findByAndDelete(companyId);
+            await CompanyModel.findByAndDelete(companyId);
 
             return res.status(200).json({
                 success: true,

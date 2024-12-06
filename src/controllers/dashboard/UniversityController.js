@@ -29,12 +29,21 @@ export const createUniversity = async (req, res) => {
 
 export const updateUniversity =async (req, res) => {
     try {
-        const universityId = req.params.id;
-        const { name, description } = req.body;
+        const dataId = req.params.id;
+        const { universityId, universityName, address, email_Id, conatctNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
 
-        const dataToUpdate = await UniversityModel.findById(universityId);
-        dataToUpdate.name = name;
-        dataToUpdate.description = description;
+        const dataToUpdate = await UniversityModel.findById(dataId);
+        dataToUpdate.universityId = universityId;
+        dataToUpdate.universityName = universityName;
+        dataToUpdate.address = address;
+        dataToUpdate.email_Id = email_Id;
+        dataToUpdate.conatctNumber = conatctNumber;
+        dataToUpdate.websiteURL = websiteURL;
+        dataToUpdate.establishedYear = establishedYear;
+        dataToUpdate.accreditationStatus = accreditationStatus;
+        dataToUpdate.universityLogo = universityLogo;
+        dataToUpdate.deanDirectorName = deanDirectorName;
+        dataToUpdate.country = country;
 
         await dataToUpdate.save();
 
@@ -54,7 +63,7 @@ export const updateUniversity =async (req, res) => {
         try {
             const universityId = req.params.id;
 
-            await UniversityModel .findByAndDelete(universityId);
+            await UniversityModel.findByAndDelete(universityId);
 
             return res.status(200).json({
                 success: true,
