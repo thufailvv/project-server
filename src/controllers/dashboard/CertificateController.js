@@ -1,4 +1,4 @@
-import { CertificateModel as CertificateModel } from "../../models/CertificateModel"
+import { CertificateModel as CertificateModel } from "../../models/CertificateModel.js"
 
 export const createCertificate = async (req, res) => {
     try{

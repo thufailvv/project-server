@@ -1,5 +1,5 @@
 import express from "express";
-import { createUniversity } from "../../../controllers/dashboard/createUniversity.js";
+import { createUniversity, deleteUniversity, getAllUniversity, updateUniversity, viewUniversity } from "../../../controllers/dashboard/UniversityController.js";
 
 export const UniversityRoutes = express.Router();
 

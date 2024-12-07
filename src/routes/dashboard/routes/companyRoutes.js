@@ -1,5 +1,6 @@
 import express from "express";
-import { createCompany } from "../../../controllers/dashboard/createCompany.js";
+
+import { createCompany, deleteCompany, getAllCompany, updateCompany, viewCompany } from "../../../controllers/dashboard/CompanyController.js";
 
 export const CompanyRoutes = express.Router();
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { createCertificate } from "../../../controllers/dashboard/createCertificate.js";
+import { createCertificate, deleteCertificate, getAllCertificate, updateCertificate, viewCertificate } from "../../../controllers/dashboard/CertificateController.js";
 
 export const CertificateRoutes = express.Router();
 
