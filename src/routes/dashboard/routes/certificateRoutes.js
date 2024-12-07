@@ -3,8 +3,8 @@ import { createCertificate } from "../../../controllers/dashboard/createCertific
 
 export const CertificateRoutes = express.Router();
 
-CertificateRoutes.post('/',createCertificate);  //creae post
-CertificateRoutes.put('/update/:id',createCertificate); //update put
-CertificateRoutes.get('/view/:id',createCertificate); //update put
-CertificateRoutes.get('/all',createCertificate); //all get
-CertificateRoutes.delete('/all',createCertificate); //update put
+CertificateRoutes.post('/',createCertificate);  //create post
+CertificateRoutes.put('/update/:id',updateCertificate); //update put
+CertificateRoutes.delete('/delete/:id',deleteCertificate); //delete delete
+CertificateRoutes.get('/view/:id',viewCertificate); //view get
+CertificateRoutes.get('/all',getAllCertificate); //all get

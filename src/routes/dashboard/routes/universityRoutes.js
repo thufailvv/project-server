@@ -3,5 +3,8 @@ import { createUniversity } from "../../../controllers/dashboard/createUniversit
 
 export const UniversityRoutes = express.Router();
 
-UniversityRoutes.post('/',createUniversity);
-UniversityRoutes.put('/update/:id',createUniversity);
+UniversityRoutes.post('/',createUniversity);  //create post
+UniversityRoutes.put('/update/:id',updateUniversity); //update put
+UniversityRoutes.delete('/delete/:id',deleteUniversity); //delete delete
+UniversityRoutes.get('/view/:id',viewUniversity); //view get
+UniversityRoutes.get('/all',getAllUniversity); //all get
