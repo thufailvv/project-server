@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(mongoSanitize());
 app.use('/uploads', express.static(cwd() + '/uploads', { maxAge: 31557600 }));
-app.use('/api/dashboard/',DashboardRouter);
+app.use('/api/dashboard',DashboardRouter);
 app.use((req, res) => {
 	const err = new Error();
 	err.status = 404;

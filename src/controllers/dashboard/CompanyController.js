@@ -2,12 +2,13 @@ import { CompanyModel as CompanyModel } from "../../models/CompanyModel.js"
 
 export const createCompany = async (req, res) => {
     try{
-        const { companyId, companyName, address, email_Id, conatctNumber, websiteURL, establishedYear, companyLogo, country, } = req.body;
+        console.log(req.body)
+        const { companyId, companyName, address, email_id, conatctNumber, websiteURL, establishedYear, companyLogo, country, } = req.body;
         await CompanyModel.create({
             companyId : companyId,
             companyName : companyName,
             address : address,
-            email_Id : email_Id,
+            email_Id : email_id,
             conatctNumber : conatctNumber,
             websiteURL : websiteURL,
             establishedYear : establishedYear,
