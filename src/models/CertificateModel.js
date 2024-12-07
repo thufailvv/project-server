@@ -15,19 +15,19 @@ const certificateSchema = new mongoose.Schema(
 			required: true,
 		},
 		issueDate : {
-			type: String,
+			type: Date,
 			required: false,
 		},
 		collegeName : {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		universityName : {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		courseDuration : {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		

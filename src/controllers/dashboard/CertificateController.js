@@ -2,10 +2,11 @@ import { CertificateModel as CertificateModel } from "../../models/CertificateMo
 
 export const createCertificate = async (req, res) => {
     try{
-        const { certificateNumber, studentid, studentName, issueDate, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
+        console.log(req.body)
+        const { certificateNumber, studentId, studentName, issueDate, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
         await CertificateModel.create({
             certificateNumber : certificateNumber,
-            studentid :  studentid,
+            studentId :  studentId,
             studentName :  studentName,
             issueDate :  issueDate,
             collegeName : collegeName,
@@ -19,7 +20,8 @@ export const createCertificate = async (req, res) => {
             message : 'Created Successfully',
         });
     }catch (error){
-        return res.status(50).json({
+        console.log(error)
+        return res.status(500).json({
             success : false,
             message : error.message,
         });

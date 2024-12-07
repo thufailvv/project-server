@@ -23,7 +23,7 @@ const universitySchema = new mongoose.Schema(
 			required: true,
 		},
 		websiteURL : {
-			type: Number,
+			type: String,
 			required: false,
 		},
 		establishedYear : {
