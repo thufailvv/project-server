@@ -22,7 +22,7 @@ const universitySchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
-		email_Id : {
+		email : {
 			type: String,
 			required: false,
 		},
@@ -35,7 +35,7 @@ const universitySchema = new mongoose.Schema(
 			required: false,
 		},
 		establishedYear : {
-			type: Number,
+			type:Date,
 			required: false,
 		},
 		accreditationStatus : {

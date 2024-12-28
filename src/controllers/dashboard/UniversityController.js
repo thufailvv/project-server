@@ -1,41 +1,42 @@
+import dayjs from "dayjs";
 import { UniversityModel } from "../../models/UniversityModel.js"
 
 export const createUniversity = async (req, res) => {
-    try{
+    try {
 
-        console.log(req.body)
-        const { userName, password, passwordd, universityName, address, email_Id, contactNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
+        const { userName, password, passwordd, universityName, address, email, contactNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
         await UniversityModel.create({
-            userName : userName,
-            password : password,
-            passwordd : passwordd,
-            universityName : universityName,
-            address : address,
-            email_Id : email_Id,
-            contactNumber : contactNumber,
-            websiteURL : websiteURL,
-            establishedYear : establishedYear,
-            accreditationStatus : accreditationStatus,
-            country : country,
+            userName: userName,
+            password: password,
+            passwordd: passwordd,
+            universityName: universityName,
+            address: address,
+            email: email,
+            contactNumber: contactNumber,
+            websiteURL: websiteURL,
+            establishedYear: establishedYear,
+            accreditationStatus: accreditationStatus,
+            deanDirectorName: deanDirectorName,
+            country: country,
         });
 
         return res.status(200).json({
-            success : true,
-            message : 'Created Successfully',
+            success: true,
+            message: 'Created Successfully',
         });
-    }catch (error){
+    } catch (error) {
         console.log(error)
         return res.status(500).json({
-            success : false,
-            message : error.message,
+            success: false,
+            message: error.message,
         });
     }
 };
 
-export const updateUniversity =async (req, res) => {
+export const updateUniversity = async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { userName, password, passwordd, universityName, address, email_Id, conatctNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
+        const { userName, password, passwordd, universityName, address, email, conatctNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
 
         const dataToUpdate = await UniversityModel.findById(dataId);
         dataToUpdate.userName = userName;
@@ -43,7 +44,7 @@ export const updateUniversity =async (req, res) => {
         dataToUpdate.passwordd = passwordd;
         dataToUpdate.universityName = universityName;
         dataToUpdate.address = address;
-        dataToUpdate.email_Id = email_Id;
+        dataToUpdate.email = email;
         dataToUpdate.conatctNumber = conatctNumber;
         dataToUpdate.websiteURL = websiteURL;
         dataToUpdate.establishedYear = establishedYear;
@@ -64,59 +65,71 @@ export const updateUniversity =async (req, res) => {
             message: 'server error',
         });
     }
-    };
+};
 
-    export const deleteUniversity =async (req, res) => {
-        try {
-            const universityId = req.params.id;
+export const deleteUniversity = async (req, res) => {
+    try {
+        const universityId = req.params.id;
 
-            await UniversityModel.findByAndDelete(universityId);
+        const data = await UniversityModel.findById(universityId);
 
+        if(!data) {
             return res.status(200).json({
-                success: true,
-                message: 'Deleted',
-            });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
+                success:true,
+                message:'No Data'
+            })
         }
 
-    };
+        data.deletedAt = dayjs();
 
-    export const viewUniversity = async (req, res) => {
-        try {
-            const universityId = req.params.id;
+        await data.save();
 
-            const university = await UniversityModel.findById(universityId);
+        return res.status(200).json({
+            success: true,
+            message: 'Deleted',
+        });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
 
-            return req.status(200).json({
-                success: true,
-                message: 'Fetched',
-                data: { university: university},
-            });
-        }   catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
-        }
-    };
+};
 
-    export const getAllUniversity = async (req, res) => {
-        try {
-            const university = await UniversityModel.find();
+export const viewUniversity = async (req, res) => {
+    try {
+        const universityId = req.params.id;
 
-            return res.status(200).json({
-                success: true,
-                message: 'All Data Fetched',
-                data: { university: university},
-            });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
-        }
-    };
+        const university = await UniversityModel.findById(universityId);
+
+        return res.status(200).json({
+            success: true,
+            message: 'Fetched',
+            data: { university: university },
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+};
+
+export const getAllUniversity = async (req, res) => {
+    try {
+        const university = await UniversityModel.find({deletedAt:null});
+
+        return res.status(200).json({
+            success: true,
+            message: 'All Data Fetched',
+            data: { university: university },
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+};
