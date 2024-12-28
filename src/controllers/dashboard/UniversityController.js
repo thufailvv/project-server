@@ -4,9 +4,11 @@ export const createUniversity = async (req, res) => {
     try{
 
         console.log(req.body)
-        const { universityId, universityName, address, email_Id, contactNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
+        const { userName, password, passwordd, universityName, address, email_Id, contactNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
         await UniversityModel.create({
-            universityId : universityId,
+            userName : userName,
+            password : password,
+            passwordd : passwordd,
             universityName : universityName,
             address : address,
             email_Id : email_Id,
@@ -33,10 +35,12 @@ export const createUniversity = async (req, res) => {
 export const updateUniversity =async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { universityId, universityName, address, email_Id, conatctNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
+        const { userName, password, passwordd, universityName, address, email_Id, conatctNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
 
         const dataToUpdate = await UniversityModel.findById(dataId);
-        dataToUpdate.universityId = universityId;
+        dataToUpdate.userName = userName;
+        dataToUpdate.password = password;
+        dataToUpdate.passwordd = passwordd;
         dataToUpdate.universityName = universityName;
         dataToUpdate.address = address;
         dataToUpdate.email_Id = email_Id;

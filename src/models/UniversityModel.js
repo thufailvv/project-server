@@ -2,7 +2,15 @@ import mongoose from 'mongoose';
 
 const universitySchema = new mongoose.Schema(
 	{
-		universityId : {
+		userName : {
+			type: String,
+			required: true,
+		},
+		password : {
+			type: String,
+			required: true,
+		},
+		passwordd : {
 			type: String,
 			required: true,
 		},
