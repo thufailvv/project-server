@@ -1,43 +1,68 @@
+import path from "path";
 import { CompanyModel as CompanyModel } from "../../models/CompanyModel.js"
 
 export const createCompany = async (req, res) => {
-    try{
-        console.log(req.body)
-        const { companyId, companyName, address, email_id, contactNumber, websiteURL, establishedYear, companyLogo, country, } = req.body;
+    try {
+        // console.log(req.body)
+        const { userName, password, companyName, address, email, contactNumber, websiteURL, establishedYear, country } = req.body;
+
+        let companyLogo;
+        // console.log(req.file)
+
+        if (req.file) {
+            companyLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+
+        }
+
+
         await CompanyModel.create({
-            companyId : companyId,
-            companyName : companyName,
-            address : address,
-            email_Id : email_id,
-            contactNumber : contactNumber,
-            websiteURL : websiteURL,
-            establishedYear : establishedYear,
-            country : country,
+            userName: userName,
+            password: password,
+            companyName: companyName,
+            address: address,
+            email: email,
+            contactNumber: contactNumber,
+            websiteURL: websiteURL,
+            establishedYear: establishedYear,
+            companyLogo: companyLogo,
+            country: country,
         });
 
         return res.status(200).json({
-            success : true,
-            message : 'Created Successfully',
+            success: true,
+            message: 'Created Successfully',
         });
-    }catch (error){
+    } catch (error) {
         console.log(error)
         return res.status(500).json({
-            success : false,
-            message : error.message,
+            success: false,
+            message: error.message,
         });
     }
 };
 
-export const updateCompany =async (req, res) => {
+export const updateCompany = async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { companyId, companyName, address, email_Id, conatctNumber, websiteURL, establishedYear, companyLogo, country, } = req.body;
+        const { userName, password, companyName, address, email, conatctNumber, websiteURL, establishedYear, country, } = req.body;
+
+        let companyLogo;
 
         const dataToUpdate = await CompanyModel.findById(dataId);
-        dataToUpdate.companyId = companyId;
+        console.log(req.file)
+        console.log(req.body)
+
+        companyLogo = dataToUpdate.companyLogo
+
+        if (req.file) {
+            companyLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+        }
+
+        dataToUpdate.userName = userName;
+        dataToUpdate.password = password;
         dataToUpdate.companyName = companyName;
         dataToUpdate.address = address;
-        dataToUpdate.email_Id = email_Id;
+        dataToUpdate.email = email;
         dataToUpdate.conatctNumber = conatctNumber;
         dataToUpdate.websiteURL = websiteURL;
         dataToUpdate.establishedYear = establishedYear;
@@ -56,59 +81,60 @@ export const updateCompany =async (req, res) => {
             message: 'server error',
         });
     }
-    };
+};
 
-    export const deleteCompany =async (req, res) => {
-        try {
-            const companyId = req.params.id;
+export const deleteCompany = async (req, res) => {
+    try {
+        const companyId = req.params.id;
 
-            await CompanyModel.findByAndDelete(companyId);
+        await CompanyModel.findByAndDelete(companyId);
 
-            return res.status(200).json({
-                success: true,
-                message: 'Deleted',
-            });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
-        }
+        return res.status(200).json({
+            success: true,
+            message: 'Deleted',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
 
-    };
+};
 
-    export const viewCompany = async (req, res) => {
-        try {
-            const companyId = req.params.id;
+export const viewCompany = async (req, res) => {
+    try {
+        const companyId = req.params.id;
+        console.log(companyId)
 
-            const company = await CompanyModel.findById(companyId);
+        const company = await CompanyModel.findById(companyId);
+        console.log(company)
+        return res.status(200).json({
+            success: true,
+            message: 'Fetched',
+            data: { company: company },
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+};
 
-            return req.status(200).json({
-                success: true,
-                message: 'Fetched',
-                data: { company: company},
-            });
-        }   catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
-        }
-    };
+export const getAllCompany = async (req, res) => {
+    try {
+        const company = await CompanyModel.find();
 
-    export const getAllCompany = async (req, res) => {
-        try {
-            const company = await CompanyModel.find();
-
-            return res.status(200).json({
-                success: true,
-                message: 'All Data Fetched',
-                data: { company: company},
-            });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
-        }
-    };
+        return res.status(200).json({
+            success: true,
+            message: 'All Data Fetched',
+            data: { company: company },
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+};

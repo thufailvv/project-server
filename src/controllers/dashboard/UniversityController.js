@@ -1,14 +1,14 @@
+
 import dayjs from "dayjs";
 import { UniversityModel } from "../../models/UniversityModel.js"
 
 export const createUniversity = async (req, res) => {
     try {
 
-        const { userName, password, passwordd, universityName, address, email, contactNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
+        const { userName, password,  universityName, address, email, contactNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
         await UniversityModel.create({
             userName: userName,
             password: password,
-            passwordd: passwordd,
             universityName: universityName,
             address: address,
             email: email,
@@ -36,12 +36,11 @@ export const createUniversity = async (req, res) => {
 export const updateUniversity = async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { userName, password, passwordd, universityName, address, email, conatctNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
+        const { userName, password,  universityName, address, email, conatctNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
 
         const dataToUpdate = await UniversityModel.findById(dataId);
         dataToUpdate.userName = userName;
         dataToUpdate.password = password;
-        dataToUpdate.passwordd = passwordd;
         dataToUpdate.universityName = universityName;
         dataToUpdate.address = address;
         dataToUpdate.email = email;

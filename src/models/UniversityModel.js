@@ -10,10 +10,6 @@ const universitySchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		passwordd : {
-			type: String,
-			required: true,
-		},
 	    universityName : {
 			type: String,
 			required: true,

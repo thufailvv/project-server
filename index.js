@@ -4,6 +4,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import {cwd} from 'process';
 import ConnectMongoDB from './src/config/db.js';
 import { DashboardRouter } from './src/routes/dashboard/MainRoutes.js';
+import { postAuth } from './src/controllers/dashboard/AuthController.js';
 const app = express();
 app.use(cors());
 app.use(express.json());

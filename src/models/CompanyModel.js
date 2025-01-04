@@ -2,7 +2,11 @@ import mongoose from 'mongoose';
 
 const companySchema = new mongoose.Schema(
 	{
-		companyId : {
+		userName : {
+			type: String,
+			required: true,
+		},
+		password : {
 			type: String,
 			required: true,
 		},
@@ -14,12 +18,12 @@ const companySchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
-		email_Id : {
+		email : {
 			type: String,
 			required: false,
 		},
 		contactNumber : {
-			type: Number,
+			type: String,
 			required: true,
 		},
 		websiteURL : {
@@ -27,7 +31,7 @@ const companySchema = new mongoose.Schema(
 			required: false,
 		},
 		establishedYear : {
-			type: Number,
+			type: String,
 			required: false,
 		},
 		
