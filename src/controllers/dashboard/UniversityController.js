@@ -5,7 +5,15 @@ import { UniversityModel } from "../../models/UniversityModel.js"
 export const createUniversity = async (req, res) => {
     try {
 
-        const { userName, password,  universityName, address, email, contactNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
+        const { userName, password,  universityName, address, email, contactNumber, websiteURL, establishedYear, accreditationStatus, deanDirectorName, country, } = req.body;
+
+         let universityLogo;
+                // console.log(req.file)
+        
+                if (req.file) {
+                    universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+        
+                }
         await UniversityModel.create({
             userName: userName,
             password: password,
@@ -16,6 +24,7 @@ export const createUniversity = async (req, res) => {
             websiteURL: websiteURL,
             establishedYear: establishedYear,
             accreditationStatus: accreditationStatus,
+            universityLogo: universityLogo,
             deanDirectorName: deanDirectorName,
             country: country,
         });
@@ -36,9 +45,22 @@ export const createUniversity = async (req, res) => {
 export const updateUniversity = async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { userName, password,  universityName, address, email, conatctNumber, websiteURL, establishedYear, accreditationStatus, universityLogo, deanDirectorName, country, } = req.body;
+        const { userName, password,  universityName, address, email, conatctNumber, websiteURL, establishedYear, accreditationStatus, deanDirectorName, country, } = req.body;
 
-        const dataToUpdate = await UniversityModel.findById(dataId);
+        
+                let universityLogo;
+        
+                const dataToUpdate = await UniversityModel.findById(dataId);
+                console.log(req.file)
+                console.log(req.body)
+        
+                universityLogo = dataToUpdate.universityLogo
+        
+                if (req.file) {
+                    universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+                }
+
+   
         dataToUpdate.userName = userName;
         dataToUpdate.password = password;
         dataToUpdate.universityName = universityName;
@@ -70,25 +92,13 @@ export const deleteUniversity = async (req, res) => {
     try {
         const universityId = req.params.id;
 
-        const data = await UniversityModel.findById(universityId);
-
-        if(!data) {
-            return res.status(200).json({
-                success:true,
-                message:'No Data'
-            })
-        }
-
-        data.deletedAt = dayjs();
-
-        await data.save();
+        await UniversityModel.findByAndDelete(universityId);
 
         return res.status(200).json({
             success: true,
             message: 'Deleted',
         });
     } catch (error) {
-        console.log(error)
         return res.status(500).json({
             success: false,
             message: 'server error',
@@ -96,11 +106,10 @@ export const deleteUniversity = async (req, res) => {
     }
 
 };
-
 export const viewUniversity = async (req, res) => {
     try {
         const universityId = req.params.id;
-
+    
         const university = await UniversityModel.findById(universityId);
 
         return res.status(200).json({
