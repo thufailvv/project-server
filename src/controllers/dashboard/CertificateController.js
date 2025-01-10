@@ -1,18 +1,31 @@
 import { CertificateModel as CertificateModel } from "../../models/CertificateModel.js"
+import { UniversityModel } from "../../models/UniversityModel.js";
 
 export const createCertificate = async (req, res) => {
     try{
         console.log(req.body)
-        const { certificateNumber, studentId, studentName, issueDate, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
+        const { certificateNumber, studentId, studentName, issueDate, courseName, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
+
+         let universityLogo;
+                // console.log(req.file)
+        
+                if (req.file) {
+                    universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+        
+                }
+        
+
         await CertificateModel.create({
             certificateNumber : certificateNumber,
             studentId :  studentId,
             studentName :  studentName,
             issueDate :  issueDate,
+            courseName : courseName,
             collegeName : collegeName,
             universityName :universityName,  
             courseDuration : courseDuration ,
             affiliationNumber : affiliationNumber,
+            universityLogo : universityLogo,
         });
 
         return res.status(200).json({
@@ -31,17 +44,31 @@ export const createCertificate = async (req, res) => {
 export const updateCertificate =async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { certificateNumber, studentid, studentName, issueDate, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
+        const { certificateNumber, studentid, studentName, issueDate, courseName, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
 
-        const dataToUpdate = await CertificateModel.findById(dataId);
+          let universityLogo;
+        
+                const dataToUpdate = await CertificateModel.findById(dataId);
+                // console.log(req.file)
+                // console.log(req.body)
+        
+                universityLogo = dataToUpdate.universityLogo
+        
+                if (req.file) {
+                    universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+                }
+        
+      
         dataToUpdate.certificateNumber = certificateNumber;
         dataToUpdate.studentid = studentid;
         dataToUpdate.studentName = studentName;
         dataToUpdate.issueDate = issueDate;
+        dataToUpdate.courseName = courseName;
         dataToUpdate.collegeName = collegeName;
         dataToUpdate.universityName = universityName;
         dataToUpdate.courseDuration = courseDuration;
         dataToUpdate.affiliationNumber = affiliationNumber;
+        dataToUpdate.universityLogo = universityLogo;
        
         await dataToUpdate.save();
 
@@ -61,7 +88,7 @@ export const updateCertificate =async (req, res) => {
         try {
             const certificateId = req.params.id;
 
-            await CertificateModel.findByAndDelete(certificateId);
+            await CertificateModel.findById(certificateId);
 
             return res.status(200).json({
                 success: true,

@@ -49,8 +49,8 @@ export const updateCompany = async (req, res) => {
         let companyLogo;
 
         const dataToUpdate = await CompanyModel.findById(dataId);
-        console.log(req.file)
-        console.log(req.body)
+        // console.log(req.file)
+        // console.log(req.body)
 
         companyLogo = dataToUpdate.companyLogo
 
@@ -87,7 +87,11 @@ export const deleteCompany = async (req, res) => {
     try {
         const companyId = req.params.id;
 
-        await CompanyModel.findByAndDelete(companyId);
+        const data = await CompanyModel.findById(companyId);
+
+        data.deletedAt = new dayjs();
+        
+        data.save();
 
         return res.status(200).json({
             success: true,

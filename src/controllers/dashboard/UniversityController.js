@@ -1,22 +1,30 @@
 
-import dayjs from "dayjs";
+import path from "path";
 import { UniversityModel } from "../../models/UniversityModel.js"
+import dayjs from "dayjs";
+import bcrypt from 'bcrypt';
+
 
 export const createUniversity = async (req, res) => {
     try {
 
         const { userName, password,  universityName, address, email, contactNumber, websiteURL, establishedYear, accreditationStatus, deanDirectorName, country, } = req.body;
 
-         let universityLogo;
+         let Logo;
                 // console.log(req.file)
         
                 if (req.file) {
-                    universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+                    Logo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+                 
         
                 }
+
+
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(password, salt);
         await UniversityModel.create({
             userName: userName,
-            password: password,
+            password: hash,
             universityName: universityName,
             address: address,
             email: email,
@@ -24,7 +32,7 @@ export const createUniversity = async (req, res) => {
             websiteURL: websiteURL,
             establishedYear: establishedYear,
             accreditationStatus: accreditationStatus,
-            universityLogo: universityLogo,
+            universityLogo: Logo,
             deanDirectorName: deanDirectorName,
             country: country,
         });
@@ -92,7 +100,12 @@ export const deleteUniversity = async (req, res) => {
     try {
         const universityId = req.params.id;
 
-        await UniversityModel.findByAndDelete(universityId);
+       const data = await UniversityModel.findById(universityId);
+
+       data.deletedAt = new dayjs();
+
+       data.save();
+
 
         return res.status(200).json({
             success: true,
