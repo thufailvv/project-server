@@ -1,5 +1,8 @@
 import path from "path";
 import { CompanyModel as CompanyModel } from "../../models/CompanyModel.js"
+import dayjs from "dayjs";
+import bcrypt from 'bcrypt';
+
 
 export const createCompany = async (req, res) => {
     try {
@@ -14,10 +17,14 @@ export const createCompany = async (req, res) => {
 
         }
 
+        
+              const salt = bcrypt.genSaltSync(10);
+             const hash = bcrypt.hashSync(password, salt);
+
 
         await CompanyModel.create({
             userName: userName,
-            password: password,
+            password: hash,
             companyName: companyName,
             address: address,
             email: email,
@@ -128,7 +135,7 @@ export const viewCompany = async (req, res) => {
 
 export const getAllCompany = async (req, res) => {
     try {
-        const company = await CompanyModel.find();
+        const company = await CompanyModel.find({deletedAt:null });
 
         return res.status(200).json({
             success: true,

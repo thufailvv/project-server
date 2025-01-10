@@ -1,5 +1,6 @@
+import path from "path";
 import { CertificateModel as CertificateModel } from "../../models/CertificateModel.js"
-import { UniversityModel } from "../../models/UniversityModel.js";
+import dayjs from "dayjs";
 
 export const createCertificate = async (req, res) => {
     try{
@@ -86,14 +87,19 @@ export const updateCertificate =async (req, res) => {
 
     export const deleteCertificate =async (req, res) => {
         try {
-            const certificateId = req.params.id;
-
-            await CertificateModel.findById(certificateId);
-
-            return res.status(200).json({
-                success: true,
-                message: 'Deleted',
-            });
+               const certificateId = req.params.id;
+       
+              const data = await CertificateModel.findById(certificateId);
+       
+              data.deletedAt = new dayjs();
+       
+              data.save();
+       
+       
+               return res.status(200).json({
+                   success: true,
+                   message: 'Deleted',
+               });
         } catch (error) {
             return res.status(500).json({
                 success: false,
@@ -124,7 +130,7 @@ export const updateCertificate =async (req, res) => {
 
     export const getAllCertificate = async (req, res) => {
         try {
-            const certificate = await CertificateModel.find();
+            const certificate = await CertificateModel.find({deletedAt:null});
 
             return res.status(200).json({
                 success: true,
