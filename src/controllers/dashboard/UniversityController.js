@@ -53,7 +53,7 @@ export const createUniversity = async (req, res) => {
 export const updateUniversity = async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { userName, password,  universityName, address, email, conatctNumber, websiteURL, establishedYear, accreditationStatus, deanDirectorName, country, } = req.body;
+        const { userName,  universityName, address, email, conatctNumber, websiteURL, establishedYear, accreditationStatus, deanDirectorName, country, } = req.body;
 
         
                 let universityLogo;
@@ -70,7 +70,6 @@ export const updateUniversity = async (req, res) => {
 
    
         dataToUpdate.userName = userName;
-        dataToUpdate.password = password;
         dataToUpdate.universityName = universityName;
         dataToUpdate.address = address;
         dataToUpdate.email = email;

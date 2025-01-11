@@ -51,7 +51,7 @@ export const createCompany = async (req, res) => {
 export const updateCompany = async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { userName, password, companyName, address, email, conatctNumber, websiteURL, establishedYear, country, } = req.body;
+        const { userName,  companyName, address, email, conatctNumber, websiteURL, establishedYear, country, } = req.body;
 
         let companyLogo;
 
@@ -66,7 +66,6 @@ export const updateCompany = async (req, res) => {
         }
 
         dataToUpdate.userName = userName;
-        dataToUpdate.password = password;
         dataToUpdate.companyName = companyName;
         dataToUpdate.address = address;
         dataToUpdate.email = email;

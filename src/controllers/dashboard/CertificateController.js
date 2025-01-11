@@ -3,63 +3,63 @@ import { CertificateModel as CertificateModel } from "../../models/CertificateMo
 import dayjs from "dayjs";
 
 export const createCertificate = async (req, res) => {
-    try{
+    try {
         console.log(req.body)
-        const { certificateNumber, studentId, studentName, issueDate, courseName, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
+        const { certificateNumber, studentId, studentName, issueDate, courseName, collegeName, universityName, courseDuration, affiliationNumber, } = req.body;
 
-         let universityLogo;
-                // console.log(req.file)
-        
-                if (req.file) {
-                    universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
-        
-                }
-        
+        let universityLogo;
+        console.log(req.file)
+
+        if (req.file) {
+            universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+
+        }
+        console.log(universityLogo)
 
         await CertificateModel.create({
-            certificateNumber : certificateNumber,
-            studentId :  studentId,
-            studentName :  studentName,
-            issueDate :  issueDate,
-            courseName : courseName,
-            collegeName : collegeName,
-            universityName :universityName,  
-            courseDuration : courseDuration ,
-            affiliationNumber : affiliationNumber,
-            universityLogo : universityLogo,
+            certificateNumber: certificateNumber,
+            studentId: studentId,
+            studentName: studentName,
+            issueDate: issueDate,
+            courseName: courseName,
+            collegeName: collegeName,
+            universityName: universityName,
+            courseDuration: courseDuration,
+            affiliationNumber: affiliationNumber,
+            universityLogo: universityLogo,
         });
 
         return res.status(200).json({
-            success : true,
-            message : 'Created Successfully',
+            success: true,
+            message: 'Created Successfully',
         });
-    }catch (error){
+    } catch (error) {
         console.log(error)
         return res.status(500).json({
-            success : false,
-            message : error.message,
+            success: false,
+            message: error.message,
         });
     }
 };
 
-export const updateCertificate =async (req, res) => {
+export const updateCertificate = async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { certificateNumber, studentid, studentName, issueDate, courseName, collegeName, universityName, courseDuration,affiliationNumber,} = req.body;
+        const { certificateNumber, studentid, studentName, issueDate, courseName, collegeName, universityName, courseDuration, affiliationNumber, } = req.body;
 
-          let universityLogo;
-        
-                const dataToUpdate = await CertificateModel.findById(dataId);
-                // console.log(req.file)
-                // console.log(req.body)
-        
-                universityLogo = dataToUpdate.universityLogo
-        
-                if (req.file) {
-                    universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
-                }
-        
-      
+        let universityLogo;
+
+        const dataToUpdate = await CertificateModel.findById(dataId);
+        // console.log(req.file)
+        // console.log(req.body)
+
+        universityLogo = dataToUpdate.universityLogo
+
+        if (req.file) {
+            universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+        }
+
+
         dataToUpdate.certificateNumber = certificateNumber;
         dataToUpdate.studentid = studentid;
         dataToUpdate.studentName = studentName;
@@ -70,7 +70,7 @@ export const updateCertificate =async (req, res) => {
         dataToUpdate.courseDuration = courseDuration;
         dataToUpdate.affiliationNumber = affiliationNumber;
         dataToUpdate.universityLogo = universityLogo;
-       
+
         await dataToUpdate.save();
 
         return res.status(200).json({
@@ -83,64 +83,66 @@ export const updateCertificate =async (req, res) => {
             message: 'server error',
         });
     }
-    };
+};
 
-    export const deleteCertificate =async (req, res) => {
-        try {
-               const certificateId = req.params.id;
-       
-              const data = await CertificateModel.findById(certificateId);
-       
-              data.deletedAt = new dayjs();
-       
-              data.save();
-       
-       
-               return res.status(200).json({
-                   success: true,
-                   message: 'Deleted',
-               });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
-        }
+export const deleteCertificate = async (req, res) => {
+    try {
+        const certificateId = req.params.id;
+        console.log('id:::::: delete', certificateId)
+        const data = await CertificateModel.findById(certificateId);
+        console.log('data', data)
+        data.deletedAt = new dayjs();
 
-    };
+        data.save();
 
-    export const viewCertificate = async (req, res) => {
-        try {
-            const certificateId = req.params.id;
 
-            const certificate = await CertificateModel.findById(certificateId);
+        return res.status(200).json({
+            success: true,
+            message: 'Deleted',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
 
-            return req.status(200).json({
-                success: true,
-                message: 'Fetched',
-                data: { certificate: certificate},
-            });
-        }   catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
-        }
-    };
+};
 
-    export const getAllCertificate = async (req, res) => {
-        try {
-            const certificate = await CertificateModel.find({deletedAt:null});
+export const viewCertificate = async (req, res) => {
+    try {
+        const certificateId = req.params.id;
 
-            return res.status(200).json({
-                success: true,
-                message: 'All Data Fetched',
-                data: { certificate: certificate},
-            });
-        } catch (error) {
-            return res.status(500).json({
-                success: false,
-                message: 'server error',
-            });
-        }
-    };
+        console.log('id::::', certificateId)
+        const certificate = await CertificateModel.findById(certificateId);
+
+        console.log('data:::', certificate);
+        return res.status(200).json({
+            success: true,
+            message: 'Fetched',
+            data: { certificate: certificate },
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+};
+
+export const getAllCertificate = async (req, res) => {
+    try {
+        const certificate = await CertificateModel.find({ deletedAt: null });
+        console.log(certificate)
+        return res.status(200).json({
+            success: true,
+            message: 'All Data Fetched',
+            data: { certificate: certificate },
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+};

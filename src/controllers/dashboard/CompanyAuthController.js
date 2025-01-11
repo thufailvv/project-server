@@ -22,10 +22,10 @@ export const postAuth = async (req, res,next) => {
 };
 export const postAuthentication = async (req, res, next) => {
 	try {
-		const reqEmail = req.body.email.trim();
+		const reqUserName = req.body.userName
 		const reqPassword = req.body.password.trim();
 
-		const user = await CompanyModel.findOne({ email: reqEmail });
+		const user = await CompanyModel.findOne({ userName: reqUserName });
 
 		if (!user) {
 			return res.status(401).json({

@@ -6,6 +6,6 @@ export const CertificateRoutes = express.Router();
 
 CertificateRoutes.post('/',uploadFile('certificates').single('universityLogo'),createCertificate);  //create post
 CertificateRoutes.put('/update/:id',uploadFile('certificates').single('universityLogo'),updateCertificate); //update put
-CertificateRoutes.delete('/delete/:id',deleteCertificate); //delete delete
+CertificateRoutes.put('/delete/:id',deleteCertificate); //delete delete
 CertificateRoutes.get('/view/:id',viewCertificate); //view get
 CertificateRoutes.get('/all',getAllCertificate); //all get
