@@ -6,6 +6,10 @@ const certificateSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		universityId : {
+			type: mongoose.Types.ObjectId,
+			required: true,
+		},
 	    studentId : {
 			type: String,
 			required: true,

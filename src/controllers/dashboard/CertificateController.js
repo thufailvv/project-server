@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 export const createCertificate = async (req, res) => {
     try {
-        console.log(req.body)
+const {userId} = req.user;
         const { certificateNumber, studentId, studentName, issueDate, courseName, collegeName, universityName, courseDuration, affiliationNumber, } = req.body;
 
         let universityLogo;
@@ -17,6 +17,7 @@ export const createCertificate = async (req, res) => {
         console.log(universityLogo)
 
         await CertificateModel.create({
+            universityId:userId,
             certificateNumber: certificateNumber,
             studentId: studentId,
             studentName: studentName,
@@ -132,7 +133,8 @@ export const viewCertificate = async (req, res) => {
 
 export const getAllCertificate = async (req, res) => {
     try {
-        const certificate = await CertificateModel.find({ deletedAt: null });
+        const {userId} =req.user;
+        const certificate = await CertificateModel.find({ deletedAt: null,universityId:userId });
         console.log(certificate)
         return res.status(200).json({
             success: true,
