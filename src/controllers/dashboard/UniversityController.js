@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 export const createUniversity = async (req, res) => {
     try {
 
-        const { userName, password,  universityName, address, email, contactNumber, websiteURL, establishedYear, accreditationStatus, deanDirectorName, country, } = req.body;
+        const { userName, password,  universityName, address, email, contactNumber, websiteURL, establishedYear, deanDirectorName, country, } = req.body;
 
          let Logo;
                 // console.log(req.file)
@@ -31,7 +31,6 @@ export const createUniversity = async (req, res) => {
             contactNumber: contactNumber,
             websiteURL: websiteURL,
             establishedYear: establishedYear,
-            accreditationStatus: accreditationStatus,
             universityLogo: Logo,
             deanDirectorName: deanDirectorName,
             country: country,
@@ -53,7 +52,7 @@ export const createUniversity = async (req, res) => {
 export const updateUniversity = async (req, res) => {
     try {
         const dataId = req.params.id;
-        const { userName,  universityName, address, email, conatctNumber, websiteURL, establishedYear, accreditationStatus, deanDirectorName, country, } = req.body;
+        const { userName,  universityName, address, email, conatctNumber, websiteURL, establishedYear, deanDirectorName, country, } = req.body;
 
         
                 let universityLogo;
@@ -76,7 +75,6 @@ export const updateUniversity = async (req, res) => {
         dataToUpdate.conatctNumber = conatctNumber;
         dataToUpdate.websiteURL = websiteURL;
         dataToUpdate.establishedYear = establishedYear;
-        dataToUpdate.accreditationStatus = accreditationStatus;
         dataToUpdate.universityLogo = universityLogo;
         dataToUpdate.deanDirectorName = deanDirectorName;
         dataToUpdate.country = country;
