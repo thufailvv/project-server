@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import AuthModel from '../../models/AuthModel.js';
 import env from '../../../env.js';
 import { UniversityModel } from '../../models/UniversityModel.js';
-export const postAuth = async (req, res,next) => {
+export const postAuth = async (req, res, next) => {
 	try {
 		const salt = bcrypt.genSaltSync(10);
 		const hash = bcrypt.hashSync(env.ADMIN_PASSWORD, salt);
@@ -29,23 +29,35 @@ export const postAuthentication = async (req, res, next) => {
 		const user = await UniversityModel.findOne({ userName: reqUserName });
 
 		if (!user) {
-			return res.status(401).json({
+			return res.status(200).json({
 				success: false,
 				message: 'Authentication failed. User not found.',
 			});
 		}
 
 		const isPasswordValid = bcrypt.compareSync(reqPassword, user.password);
-console.log(isPasswordValid)
 		if (!isPasswordValid) {
-			return res.status(401).json({
+			return res.status(200).json({
 				success: false,
 				message: 'Authentication failed. Invalid password.',
 			});
 		}
 
+		if (user.isApproved === 'Reject') {
+			return res.status(200).json({
+				success: false,
+				message: 'Your Request has been Rejected.',
+			});
+		}
+
+		if (user.isApproved === 'Request') {
+			return res.status(200).json({
+				success: false,
+				message: 'Your Request is in Pending.',
+			});
+		}
 		const accessToken = jwt.sign({ userId: user._id }, env.JWT_SECRET_KEY, { expiresIn: env.JWT_EXPIRES });
-		const userData = { email: user.email};
+		const userData = { email: user.email };
 
 		return res.status(200).json({
 			success: true,
@@ -53,7 +65,7 @@ console.log(isPasswordValid)
 			userData,
 		});
 	} catch (err) {
-		
+
 		console.log(err)
 	}
 };

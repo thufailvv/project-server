@@ -135,7 +135,7 @@ export const getAllCertificate = async (req, res) => {
     try {
         const {userId} =req.user;
         const certificate = await CertificateModel.find({ deletedAt: null,universityId:userId });
-        console.log(certificate)
+        console.log('heyyyyy',certificate)
         return res.status(200).json({
             success: true,
             message: 'All Data Fetched',

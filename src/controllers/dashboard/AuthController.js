@@ -22,8 +22,11 @@ export const postAuth = async (req, res,next) => {
 };
 export const postAuthentication = async (req, res, next) => {
 	try {
+		console.log('helloooo')
 		const reqEmail = req.body.email.trim();
 		const reqPassword = req.body.password.trim();
+		console.log(reqEmail)
+		console.log(reqPassword)
 
 		const user = await AuthModel.findOne({ email: reqEmail });
 

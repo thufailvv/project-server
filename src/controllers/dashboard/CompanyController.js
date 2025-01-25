@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 export const createCompany = async (req, res) => {
     try {
         // console.log(req.body)
-        const { userName, password, companyName, address, email, contactNumber, websiteURL, establishedYear, country } = req.body;
+        const { userName, password, companyName, address, email, contactNumber, websiteURL, establishedYear, country,isApproved } = req.body;
 
         let companyLogo;
         // console.log(req.file)
@@ -33,6 +33,7 @@ export const createCompany = async (req, res) => {
             establishedYear: establishedYear,
             companyLogo: companyLogo,
             country: country,
+            isApproved: isApproved,
         });
 
         return res.status(200).json({

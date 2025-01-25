@@ -47,8 +47,13 @@ const companySchema = new mongoose.Schema(
 		deletedAt : {
 			type: Date,
 			required: false,
-			default:null
+			default:null,
 		},
+		isApproved : {
+			type: Number,
+			required: false,
+			default: 0,
+		}
 	},
 	{ timestamps: true },
 );

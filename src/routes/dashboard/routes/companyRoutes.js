@@ -2,6 +2,7 @@ import express from "express";
 
 import { createCompany, deleteCompany, getAllCompany, updateCompany, viewCompany } from "../../../controllers/dashboard/CompanyController.js";
 import { uploadFile } from "../../../utils/fileUploader.js";
+import { authMiddleware } from "../../../middleware/UniversityMiddleware.js";
 
 export const CompanyRoutes = express.Router();
 

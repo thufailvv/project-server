@@ -55,6 +55,11 @@ const universitySchema = new mongoose.Schema(
 			required: false,
 			default:null
 		},
+		isApproved : {
+			type: String,
+			required: false,
+			default: 'Request',
+		}
 	},
 	{ timestamps: true },
 );
