@@ -90,6 +90,60 @@ export const updateCompany = async (req, res) => {
     }
 };
 
+export const Approving = async (req, res) => {
+    try {
+
+        const companyId = req.params.id;
+
+
+        const data = await CompanyModel.findById(companyId);
+
+        data.isApproved = 'Approve';
+
+        data.save();
+
+            return res.status(200).json({
+                success: true,
+                message: 'Approved',
+            });
+
+      
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+
+};
+export const Rejecting = async (req, res) => {
+    try {
+
+        const companyId = req.params.id;
+
+        const data = await CompanyModel.findById(companyId);
+
+        data.isApproved = 'Reject';
+
+        data.save();
+
+            return res.status(200).json({
+                success: true,
+                message: 'Rejected',
+            });
+
+      
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+
+};
+
 export const deleteCompany = async (req, res) => {
     try {
         const companyId = req.params.id;
@@ -135,7 +189,24 @@ export const viewCompany = async (req, res) => {
 
 export const getAllCompany = async (req, res) => {
     try {
-        const company = await CompanyModel.find({deletedAt:null });
+        const company = await CompanyModel.find({ deletedAt: null, isApproved: 'Approve' });
+
+        return res.status(200).json({
+            success: true,
+            message: 'All Data Fetched',
+            data: { company: company },
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'server error',
+        });
+    }
+};
+
+export const getAllRequest = async (req, res) => {
+    try {
+        const company = await CompanyModel.find({ deletedAt: null, isApproved: 'Request' });
 
         return res.status(200).json({
             success: true,

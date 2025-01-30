@@ -1,4 +1,3 @@
-
 import path from "path";
 import { UniversityModel } from "../../models/UniversityModel.js"
 import dayjs from "dayjs";

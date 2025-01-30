@@ -50,9 +50,9 @@ const companySchema = new mongoose.Schema(
 			default:null,
 		},
 		isApproved : {
-			type: Number,
+			type: String,
 			required: false,
-			default: 0,
+			default: 'Request',
 		}
 	},
 	{ timestamps: true },
