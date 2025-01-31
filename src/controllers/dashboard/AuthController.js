@@ -38,7 +38,7 @@ export const postAuthentication = async (req, res, next) => {
 		}
 
 		const isPasswordValid = bcrypt.compareSync(reqPassword, user.password);
-console.log(isPasswordValid)
+		console.log(isPasswordValid)
 		if (!isPasswordValid) {
 			return res.status(401).json({
 				success: false,
@@ -51,6 +51,7 @@ console.log(isPasswordValid)
 
 		return res.status(200).json({
 			success: true,
+			message: 'Logged in Successfully',
 			accessToken,
 			userData,
 		});
