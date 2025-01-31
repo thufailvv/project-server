@@ -3,24 +3,7 @@ import jwt from 'jsonwebtoken';
 import env from '../../../env.js';
 import { CompanyModel } from '../../models/CompanyModel.js';
 import AuthModel from '../../models/AuthModel.js';
-export const postAuth = async (req, res,next) => {
-	try {
-		const salt = bcrypt.genSaltSync(10);
-		const hash = bcrypt.hashSync(env.ADMIN_PASSWORD, salt);
 
-		// const hash = bcrypt.hashSync(req.body.password, salt);
-		const newUser = new AuthModel({
-			password: hash,
-			email: env.ADMIN_EMAIL,
-
-			// email: req.body.email,
-		});
-		await newUser.save();
-		return res.status(200).send('User has been created!');
-	} catch (err) {
-		console.log(err)
-	}
-};
 export const postAuthentication = async (req, res, next) => {
 	try {
 		const reqUserName = req.body.userName
