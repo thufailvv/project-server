@@ -175,7 +175,7 @@ export const viewCompany = async (req, res) => {
         console.log(companyId)
 
         const company = await CompanyModel.findById(companyId);
-        console.log(company)
+        console.log('cerficate',company)
         return res.status(200).json({
             success: true,
             message: 'Fetched',
@@ -226,7 +226,7 @@ export const getAllRequest = async (req, res) => {
 export const certificateVerify = async (req, res) => {
     try {
         const { selectedOption, certificateNumber } = req.body
-        console.log('daata::',req.body)
+        console.log('daata::', req.body)
         const certificate = (await CertificateModel.aggregate([
             {
                 $match: {
@@ -236,7 +236,7 @@ export const certificateVerify = async (req, res) => {
                 }
             }
         ])).at(0);
-console.log('certificate:::',certificate)
+        console.log('certificate:::', certificate)
         if (!certificate) {
             return res.status(200).json({
                 success: false,
@@ -246,6 +246,9 @@ console.log('certificate:::',certificate)
         return res.status(200).json({
             success: true,
             message: 'Certificate is Valid',
+            data: {
+                certificateId: certificate._id
+            }
         });
     } catch (error) {
         return res.status(500).json({

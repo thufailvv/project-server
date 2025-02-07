@@ -3,6 +3,7 @@ import slugify from 'slugify';
 import { getUploadDir } from './fileUtils.js';
 
 export const uploadFile = (path) => {
+	console.log("uploadddd")
 	const whitelist = ['image/png', 'image/jpeg', 'image/jpg', 'image/webp'];
 
 	//Using multer
@@ -21,6 +22,6 @@ export const uploadFile = (path) => {
 		}
 		cb(null, true);
 	};
-
+// console.log("returnnnnn")
 	return multer({ storage: storage, fileFilter: fileFilter });
 };

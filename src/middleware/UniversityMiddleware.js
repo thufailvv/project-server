@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import env from '../../env.js';
 
 export const authMiddleware = (req, res, next) => {
-
+console.log("calllllllmiddleware")
 	const authHeader = req.headers.authorization;
 	if (!authHeader) {
 		return res.status(401).json({
@@ -10,8 +10,6 @@ export const authMiddleware = (req, res, next) => {
 			message: 'Access token not found',
 		});
 	}
-
-
 	try {
 		const token = authHeader.split(' ')[1];
 
@@ -28,6 +26,8 @@ export const authMiddleware = (req, res, next) => {
 		}
 
 		req.user = decodeData;
+
+		console.log('User:::', req.user)
 
 		next();
 	} catch (error) {

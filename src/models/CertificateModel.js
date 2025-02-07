@@ -43,7 +43,7 @@ const certificateSchema = new mongoose.Schema(
 			type: String,
 			required: false,
 		},
-		universityLogo : {
+		certificatePhoto : {
 			type: String,
 			required: false,
 		},

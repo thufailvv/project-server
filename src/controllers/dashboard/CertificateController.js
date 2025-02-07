@@ -1,23 +1,26 @@
 import path from "path";
 import { CertificateModel as CertificateModel } from "../../models/CertificateModel.js"
 import dayjs from "dayjs";
+import mongoose from "mongoose";
 
 export const createCertificate = async (req, res) => {
     try {
-const {userId} = req.user;
+        console.log("calllll")
+        const { userId } = req.user;
+        console.log('useriddd',userId)
         const { certificateNumber, studentId, studentName, issueDate, courseName, collegeName, universityName, courseDuration, affiliationNumber, } = req.body;
 
-        let universityLogo;
-        console.log(req.file)
+        let certificatePhoto;
+        console.log("reqfileeee",req.file)
 
         if (req.file) {
-            universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+            certificatePhoto = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
 
         }
-        console.log(universityLogo)
+        console.log(certificatePhoto)
 
         await CertificateModel.create({
-            universityId:userId,
+            universityId: userId,
             certificateNumber: certificateNumber,
             studentId: studentId,
             studentName: studentName,
@@ -27,7 +30,7 @@ const {userId} = req.user;
             universityName: universityName,
             courseDuration: courseDuration,
             affiliationNumber: affiliationNumber,
-            universityLogo: universityLogo,
+            certificatePhoto: certificatePhoto,
         });
 
         return res.status(200).json({
@@ -48,16 +51,16 @@ export const updateCertificate = async (req, res) => {
         const dataId = req.params.id;
         const { certificateNumber, studentid, studentName, issueDate, courseName, collegeName, universityName, courseDuration, affiliationNumber, } = req.body;
 
-        let universityLogo;
+        let certificatePhoto;
 
         const dataToUpdate = await CertificateModel.findById(dataId);
         // console.log(req.file)
         // console.log(req.body)
 
-        universityLogo = dataToUpdate.universityLogo
+        certificatePhoto = dataToUpdate.certificatePhoto
 
         if (req.file) {
-            universityLogo = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
+            certificatePhoto = 'uploads' + req.file?.path.split(path.sep + 'uploads').at(1);
         }
 
 
@@ -70,7 +73,7 @@ export const updateCertificate = async (req, res) => {
         dataToUpdate.universityName = universityName;
         dataToUpdate.courseDuration = courseDuration;
         dataToUpdate.affiliationNumber = affiliationNumber;
-        dataToUpdate.universityLogo = universityLogo;
+        dataToUpdate.certificatePhoto = certificatePhoto;
 
         await dataToUpdate.save();
 
@@ -113,15 +116,17 @@ export const deleteCertificate = async (req, res) => {
 export const viewCertificate = async (req, res) => {
     try {
         const certificateId = req.params.id;
+        // const universityId = req.user.userId;
 
         console.log('id::::', certificateId)
-        const certificate = await CertificateModel.findById(certificateId);
+        // console.log('id::::', universityId)
+        const certificate = await CertificateModel.find({ _id: certificateId, deletedAt: null });
 
         console.log('data:::', certificate);
         return res.status(200).json({
             success: true,
             message: 'Fetched',
-            data: { certificate: certificate },
+            data: { certificate: certificate.at(0) },
         });
     } catch (error) {
         return res.status(500).json({
@@ -133,9 +138,9 @@ export const viewCertificate = async (req, res) => {
 
 export const getAllCertificate = async (req, res) => {
     try {
-        const {userId} =req.user;
-        const certificate = await CertificateModel.find({ deletedAt: null,universityId:userId });
-        console.log('heyyyyy',certificate)
+        const { userId } = req.user;
+        const certificate = await CertificateModel.find({ deletedAt: null, universityId: userId });
+        console.log('heyyyyy', certificate)
         return res.status(200).json({
             success: true,
             message: 'All Data Fetched',
